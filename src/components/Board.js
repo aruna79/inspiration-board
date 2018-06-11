@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+
 import axios from 'axios';
 
 import './Board.css';
@@ -16,10 +17,14 @@ class Board extends Component {
     };
   }
 
+
   render() {
     return (
       <div>
-        Board
+        <Card
+        text={CARD_DATA.cards[0].text}
+        emoji={CARD_DATA.cards[0].emoji}
+        />
       </div>
     )
   }
