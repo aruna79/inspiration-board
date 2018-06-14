@@ -40,7 +40,7 @@ class Board extends Component {
       cards = cards.filter(card =>card.card.id!=id);
       this.setState({
         cards,
-        message:'Card was deleted successfully',
+        error:'Card was deleted successfully',
       });
     })
     .catch( (error) => {
@@ -68,11 +68,29 @@ class Board extends Component {
       )
     }
   }
+  addCard = (card) => {
+    const cards = this.state.cards;
+    const newCard = {'card': card};
+  axios.post('https://inspiration-board.herokuapp.com/boards/Aruna/cards', card)
+      .then((response) => {
+        cards.push(newCard);
+        this.setState({
+          cards,
+          error: 'New card was added successfully'
+        });
+      })
+      .catch((error) => {
+        this.setState({
+          error: error.message,
+        });
+      });
+  }
 
 
   render() {
     return (
       <div className="board">
+      <NewCardForm addCardCallback={this.addCard}/>
         {this.renderCards()}
         {this.renderError()}
 
