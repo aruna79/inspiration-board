@@ -16,24 +16,66 @@ class Board extends Component {
       cards: [],
     };
   }
+  componentDidMount = () => {
+    console.log('Component did mount');
+    axios.get('https://inspiration-board.herokuapp.com/boards/Aruna/cards')
+    .then((response) => {
+      console.log(response.data);
+      this.setState({
+        cards: response.data
+      });
+
+    })
+    .catch((error) => {
+      this.setState({
+        error: error.message
+      })
+
+    });
+  }
+  removeCard = (id) => {
+    let cards = this.state.cards;
+    axios.delete(`https://inspiration-board.herokuapp.com/boards/:board_name/cards/${id}`)
+    .then((response) => {
+      cards = cards.filter(card =>card.card.id!=id);
+      this.setState({
+        cards,
+        message:'Card was deleted successfully',
+      });
+    })
+    .catch( (error) => {
+      this.setState({ error: error.message });
+    });
+  }
   renderCards = () => {
-    const componentList = CARD_DATA.cards.map((card,index) => {
+    const componentList = this.state.cards.map((card,index) => {
       return(
         <Card
           key={index}
-          text={card.text}
-          emoji={card.emoji}
+          id={card.card.id}
+          text={card.card.text}
+          emoji={card.card.emoji}
+          removeCard={this.removeCard}
           />
       );
     });
     return componentList;
   }
+  renderError = () =>{
+    if(this.state.error){
+      return(
+        <p>{this.state.error}</p>
+      )
+    }
+  }
 
 
   render() {
     return (
-      <div>
+      <div className="board">
         {this.renderCards()}
+        {this.renderError()}
+
       </div>
     )
   }

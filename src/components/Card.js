@@ -13,11 +13,16 @@ class Card extends Component {
       );
     }
   }
+
+  deleteCard = () => {
+    this.props.removeCard(this.props.id)
+  }
   render() {
     return (
       <div className="card">
-      <h3>Card{this.props.text}</h3>
-      <p>{this.renderEmoji()}</p>
+      <div onClick={this.deleteCard} className='card__delete'>X</div>
+      <h3 className="card__content">{this.props.text}</h3>
+      <p className="card_content_emoji">{this.renderEmoji()}</p>
 
 
       </div>
@@ -27,8 +32,10 @@ class Card extends Component {
 
 
 Card.propTypes = {
+  id:PropTypes.number.isRequired,
   text:PropTypes.string,
   emoji:PropTypes.string,
+  removeCard:PropTypes.func.isRequired,
 
 };
 
