@@ -20,7 +20,7 @@ class Card extends Component {
   render() {
     return (
       <div className="card">
-      <div onClick={this.deleteCard} className='card__delete'>X</div>
+      <button className='card__delete' onClick={this.deleteCard} >X</button>
       <h3 className="card__content">{this.props.text}</h3>
       <p className="card_content_emoji">{this.renderEmoji()}</p>
 

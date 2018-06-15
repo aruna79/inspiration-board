@@ -61,13 +61,7 @@ class Board extends Component {
     });
     return componentList;
   }
-  renderError = () =>{
-    if(this.state.error){
-      return(
-        <p>{this.state.error}</p>
-      )
-    }
-  }
+
   addCard = (card) => {
     const cards = this.state.cards;
     const newCard = {'card': card};
@@ -85,14 +79,21 @@ class Board extends Component {
         });
       });
   }
+  renderError = () =>{
+    if(this.state.error){
+      return(
+        <p>{this.state.error}</p>
+      )
+    }
+  }
 
 
   render() {
     return (
       <div className="board">
       <NewCardForm addCardCallback={this.addCard}/>
-        {this.renderCards()}
-        {this.renderError()}
+        <div className="cards">{this.renderCards()}</div>
+        <div className="validation-errors-display-list">{this.renderError()}</div>
 
       </div>
     )
